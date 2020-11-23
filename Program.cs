@@ -8,7 +8,13 @@ namespace GitHubWikiSidbarToDocFX
     {
         static void Main(string[] args)
         {
-            var sidelines = File.ReadAllText("_Sidebar.md").Split('\n');
+            if (args.Length < 1 || args.Length > 2)
+                throw new Exception("Invalide number of arguments!");
+
+            if (!File.Exists(args[0]))
+                throw new FileNotFoundException(args[0]);
+
+            var sidelines = File.ReadAllText(args[0]).Split('\n');
             StringBuilder toc = new StringBuilder();
 
             for (int i = 0; i < sidelines.Length; i++)
@@ -66,7 +72,9 @@ namespace GitHubWikiSidbarToDocFX
                 }
             }
 
-            File.WriteAllText("toc.yml", toc.ToString());
+            var outfilepath = args.Length > 1 ? Path.Combine(args[1], "toc.yml") : "toc.yml";
+
+            File.WriteAllText(outfilepath, toc.ToString());
         }
 
         public static string GetUntilOrEmpty(string text, string stopAt = "-")
