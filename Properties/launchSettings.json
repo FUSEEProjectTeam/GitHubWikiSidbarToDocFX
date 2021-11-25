@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GitHubWikiSidbarToDocFX": {
+      "commandName": "Project",
+      "commandLineArgs": "_Sidebar.md"
+    }
+  }
+}

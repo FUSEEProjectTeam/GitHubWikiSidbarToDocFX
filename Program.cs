@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace GitHubWikiSidbarToDocFX
 {
@@ -14,7 +15,9 @@ namespace GitHubWikiSidbarToDocFX
             if (!File.Exists(args[0]))
                 throw new FileNotFoundException(args[0]);
 
-            var sidelines = File.ReadAllText(args[0]).Split('\n');
+            var file = File.ReadAllText(args[0]);
+            file = Regex.Replace(file, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline);
+            var sidelines = file.Split('\n');
             StringBuilder toc = new StringBuilder();
 
             for (int i = 0; i < sidelines.Length; i++)
